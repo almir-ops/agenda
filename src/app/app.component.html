@@ -1,0 +1,72 @@
+
+<div class="flex justify-center mt-10 mb-4">
+  <div class="flex flex-col">
+
+  <form [formGroup]="form" class="flex flex-col" >
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input matInput type="text" [(ngModel)]="name" formControlName="name">
+      <button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-label>Telefone</mat-label>
+      <input matInput type="text" [(ngModel)]="phone" formControlName="phone">
+      <button *ngIf="phone" matSuffix mat-icon-button aria-label="Clear" (click)="phone=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+  <div class="flex flex-row justify-center -ml-2">
+    <div class="mx-2">
+      <button mat-raised-button color="primary" class="h-[60px] w-[150px]" (click)="save()">Salvar</button>
+    </div>
+    <button mat-raised-button class="h-[60px] w-[150px] mx-2" (click)="deleteAll()">Limpar</button>
+  </div>
+
+
+<mat-form-field appearance="standard">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+</mat-form-field>
+  </div>
+</div>
+<div class="flex justify-center">
+  
+  <table mat-table [dataSource]="dataSource" matSort  class="mat-elevation-z8 w-[80%] md:w-[50%]">
+
+    <!-- Position Column -->
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+      Nº
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+  </ng-container>
+  
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> Nome </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} 
+
+      </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef> Telefone </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+  
+  <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let element" class="action-link cursor-pointer"> 
+        <a (click)="deleteByItem(element)">Delete</a>  
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
